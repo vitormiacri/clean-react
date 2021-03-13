@@ -3,6 +3,14 @@
     "browser": true,
     "es2021": true
   },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "extends": [
     "plugin:react/recommended",
     "airbnb",
@@ -71,10 +79,5 @@
         "tsx": "never"
       }
     ]
-  },
-  "settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
   }
 }
