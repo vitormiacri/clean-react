@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import Spinner from '@/presentation/components/spinner/spinner';
 import Styles from './form-status-styles.scss';
 
-const Footer: React.FC = () => {
+const FormStatus: React.FC = () => {
   return (
     <div className={Styles.errorWrap}>
       <Spinner className={Styles.spinner} />
@@ -11,4 +11,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default memo(Footer);
+export default FormStatus;
