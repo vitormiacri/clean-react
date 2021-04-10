@@ -1,7 +1,7 @@
 import faker from 'faker';
 import { HttpPostClientSpy } from '@/data/test';
 import { HttpStatusCode } from '@/data/protocols/http';
-import { mockAccount, mockAuthentication } from '@/domain/test';
+import { mockAccountModel, mockAuthentication } from '@/domain/test';
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors';
 import { AuthenticationParams } from '@/domain/usecases';
 import { AccountModel } from '@/domain/models';
@@ -77,7 +77,7 @@ describe('RemoteAuthentication', () => {
 
   test('Should return an AccountModel if HttpPostClient return 200', async () => {
     const { sut, httpClientSpy } = makeSut();
-    const httpResult = mockAccount();
+    const httpResult = mockAccountModel();
     httpClientSpy.response = {
       statusCode: HttpStatusCode.ok,
       body: httpResult,
