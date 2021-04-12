@@ -6,6 +6,7 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import 'jest-localstorage-mock';
 import faker from 'faker';
 import { ValidationStub, AuthenticationSpy } from '@/presentation/test';
 import { InvalidCredentialsError } from '@/domain/errors';
@@ -72,6 +73,9 @@ const simulateStatusForField = (
 
 describe('Login Component', () => {
   afterEach(cleanup);
+  beforeEach(() => {
+    localStorage.clear();
+  });
 
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
@@ -152,7 +156,7 @@ describe('Login Component', () => {
     expect(authenticationSpy.callsCount).toBe(0);
   });
 
-  test('Should present Ahthentication fails', async () => {
+  test('Should present if Ahthentication fails', async () => {
     const { sut, authenticationSpy } = makeSut();
     const error = new InvalidCredentialsError();
     jest
@@ -164,5 +168,15 @@ describe('Login Component', () => {
     const mainError = sut.getByTestId('main-error');
     expect(mainError.textContent).toBe(error.message);
     expect(erroWrap.childElementCount).toBe(1);
+  });
+
+  test('Should add accessToken to localstorage on success', async () => {
+    const { sut, authenticationSpy } = makeSut();
+    simulateValidSubmit(sut);
+    await waitFor(() => sut.getByTestId('form'));
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'accessToken',
+      authenticationSpy.account.accessToken
+    );
   });
 });
