@@ -1,4 +1,12 @@
 {
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "env": {
       "browser": true,
       "es2021": true,
@@ -27,6 +35,7 @@
     "@typescript-eslint/comma-spacing": "off",
     "@typescript-eslint/return-await": "off",
     "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/method-signature-style": "off",
     "no-redeclare": "off",
     "import/export": "off",
     "prettier/prettier": "error",
