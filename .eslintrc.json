@@ -73,6 +73,8 @@
         "allowExpressions": true
       }
     ],
+    "no-restricted-syntax": "off",
+    "consistent-return": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
