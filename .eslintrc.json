@@ -2,7 +2,7 @@
   "env": {
       "browser": true,
       "es2021": true,
-      "jest": true,
+      "jest": true
   },
   "extends": [
     "standard",
@@ -28,7 +28,11 @@
     "@typescript-eslint/no-namespace": "off",
     "no-redeclare": "off",
     "import/export": "off",
+    "prettier/prettier": "error",
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react/prop-types": "off"
   }
 }
