@@ -1,5 +1,6 @@
 {
   "*.{ts,tsx}": [
+    "prettier --write",
     "eslint 'src/**' --fix",
     "yarn run test:staged"
   ]
