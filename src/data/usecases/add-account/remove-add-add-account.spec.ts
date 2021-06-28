@@ -26,4 +26,11 @@ describe('RemoveAddAccount', () => {
     await sut.add(mockAddAccountParams());
     expect(httpClientSpy.url).toBe(url);
   });
+
+  test('Should call HttpPostClient with correct body', async () => {
+    const { sut, httpClientSpy } = makeSut();
+    const addAccountParams = mockAddAccountParams();
+    await sut.add(addAccountParams);
+    expect(httpClientSpy.body).toEqual(addAccountParams);
+  });
 });
