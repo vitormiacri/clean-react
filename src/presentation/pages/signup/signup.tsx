@@ -33,16 +33,11 @@ const SignUp: React.FC<Props> = ({ validation }) => {
       emailError: validation.validate('email', state.email),
       passwordError: validation.validate('password', state.password),
       passwordConfirmationError: validation.validate(
-        'passwordConfirmationError',
-        state.passwordConfirmationError
+        'passwordConfirmation',
+        state.passwordConfirmation
       ),
     });
-  }, [
-    state.name,
-    state.email,
-    state.password,
-    state.passwordConfirmationError,
-  ]);
+  }, [state.name, state.email, state.password, state.passwordConfirmation]);
 
   return (
     <div className={Styles.signup}>
@@ -64,7 +59,12 @@ const SignUp: React.FC<Props> = ({ validation }) => {
           />
           <button
             data-testid="submit"
-            disabled
+            disabled={
+              !!state.nameError ||
+              !!state.emailError ||
+              !!state.passwordError ||
+              !!state.passwordConfirmationError
+            }
             className={Styles.submit}
             type="submit"
           >
