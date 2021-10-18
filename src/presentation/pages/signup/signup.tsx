@@ -6,6 +6,7 @@ import {
   Input,
   FormStatus,
   LoginHeader,
+  SubmitButton,
 } from '@/presentation/components';
 import Context from '@/presentation/contexts/form/form-context';
 
@@ -27,6 +28,7 @@ const SignUp: React.FC<Props> = ({
   const history = useHistory();
   const [state, setState] = useState({
     isLoading: false,
+    isFormIsInvalid: true,
     name: '',
     nameError: '',
     email: '',
@@ -38,15 +40,25 @@ const SignUp: React.FC<Props> = ({
     mainError: '',
   });
   useEffect(() => {
+    const nameError = validation.validate('name', state.name);
+    const emailError = validation.validate('email', state.email);
+    const passwordError = validation.validate('password', state.password);
+    const passwordConfirmationError = validation.validate(
+      'passwordConfirmation',
+      state.passwordConfirmation
+    );
+
     setState({
       ...state,
-      nameError: validation.validate('name', state.name),
-      emailError: validation.validate('email', state.email),
-      passwordError: validation.validate('password', state.password),
-      passwordConfirmationError: validation.validate(
-        'passwordConfirmation',
-        state.passwordConfirmation
-      ),
+      nameError,
+      emailError,
+      passwordError,
+      passwordConfirmationError,
+      isFormIsInvalid:
+        !!nameError ||
+        !!emailError ||
+        !!passwordError ||
+        !!passwordConfirmationError,
     });
   }, [state.name, state.email, state.password, state.passwordConfirmation]);
 
@@ -56,13 +68,7 @@ const SignUp: React.FC<Props> = ({
     event.preventDefault();
     try {
       setState({ ...state, isLoading: true });
-      if (
-        state.isLoading ||
-        !!state.nameError ||
-        !!state.emailError ||
-        !!state.passwordError ||
-        !!state.passwordConfirmationError
-      ) {
+      if (state.isLoading || !!state.isFormIsInvalid) {
         return;
       }
       const account = await addAccount.add({
@@ -100,19 +106,7 @@ const SignUp: React.FC<Props> = ({
             name="passwordConfirmation"
             placeholder="Repita sua senha"
           />
-          <button
-            data-testid="submit"
-            disabled={
-              !!state.nameError ||
-              !!state.emailError ||
-              !!state.passwordError ||
-              !!state.passwordConfirmationError
-            }
-            className={Styles.submit}
-            type="submit"
-          >
-            Criar Conta
-          </button>
+          <SubmitButton text="Cadastrar" />
           <Link
             data-testid="login-link"
             replace
