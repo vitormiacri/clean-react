@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import {
   Footer,
   Input,
@@ -9,14 +10,20 @@ import Context from '@/presentation/contexts/form/form-context';
 
 import Styles from './signup-styles.scss';
 import { Validation } from '@/presentation/protocols/validation';
-import { AddAccount } from '@/domain/usecases';
+import { AddAccount, SaveAccessToken } from '@/domain/usecases';
 
 type Props = {
   validation: Validation;
   addAccount: AddAccount;
+  saveAccessToken: SaveAccessToken;
 };
 
-const SignUp: React.FC<Props> = ({ validation, addAccount }) => {
+const SignUp: React.FC<Props> = ({
+  validation,
+  addAccount,
+  saveAccessToken,
+}) => {
+  const history = useHistory();
   const [state, setState] = useState({
     isLoading: false,
     name: '',
@@ -57,12 +64,14 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }) => {
       ) {
         return;
       }
-      await addAccount.add({
+      const account = await addAccount.add({
         name: state.name,
         email: state.email,
         password: state.password,
         passwordConfirmation: state.passwordConfirmation,
       });
+      await saveAccessToken.save(account.accessToken);
+      history.replace('/');
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message });
     }
