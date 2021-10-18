@@ -137,6 +137,7 @@ describe('Login Component', () => {
   test('Should call Ahthentication only once', async () => {
     const { sut, authenticationSpy } = makeSut();
     await simulateValidSubmit(sut);
+    await simulateValidSubmit(sut);
     expect(authenticationSpy.callsCount).toBe(1);
   });
 
