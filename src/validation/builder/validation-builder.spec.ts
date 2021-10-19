@@ -3,6 +3,7 @@ import {
   EmailValidation,
   MinLengthValidation,
   RequiredFieldValidation,
+  CompareFieldsValidation,
 } from '@/validation/validators';
 import { ValidationBuilder as sut } from './validation-builder';
 
@@ -24,6 +25,15 @@ describe('ValidationBuiler', () => {
     const length = faker.datatype.number();
     const validations = sut.field(field).min(length).build();
     expect(validations).toEqual([new MinLengthValidation(field, length)]);
+  });
+
+  test('Should return CompareFieldValidation', () => {
+    const field = faker.database.column();
+    const fieldToCompare = faker.database.column();
+    const validations = sut.field(field).sameAs(fieldToCompare).build();
+    expect(validations).toEqual([
+      new CompareFieldsValidation(field, fieldToCompare),
+    ]);
   });
 
   test('Should return a list of validations', () => {
