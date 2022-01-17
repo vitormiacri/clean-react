@@ -6,5 +6,9 @@ export const mockEmailInUseError = (): void =>
 
 export const mockUnexpectedError = (): void =>
   Helper.mockUnexpectedError(/signup/, 'POST');
+
 export const mockInvalidData = (): void =>
   Helper.mockOk(/signup/, 'POST', { invalidProperty: faker.datatype.uuid() });
+
+export const mockOk = (): void =>
+  Helper.mockOk(/login/, 'POST', { accessToken: faker.datatype.uuid() });
